@@ -1,8 +1,30 @@
-import {addTeamMember, createTeam, getTeamMembers} from "./requests.js";
-
-// createTeam();
-getTeamMembers();
-// addTeamMember();
+import API from "../api/index.js";
 
 
-// Post request ler 406 verir
+// console.log(await API.createGame());
+// console.log(await API.createTeam('test123'));
+// console.log(await API.getTeamMembers());
+
+// const sleep = s => new Promise(r => setTimeout(r, s * 1000));
+
+// while (true) {
+//     let { myGames } = await API.getOpenGames()
+
+//     if (myGames.length === 0) {
+//         console.log('No game avaliable');
+//         sleep(5)
+//         continue
+//     }
+
+//     let myMoveExisted = false;
+
+//     for (let i = 0; i < myGames.length; i++) {
+
+//     }
+
+
+//     if (!myMoveExisted) {
+//         console.log("Not my move in all available games");
+//     }
+//     sleep(5)
+// }
