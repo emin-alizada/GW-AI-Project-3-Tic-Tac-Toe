@@ -23,7 +23,7 @@ class MiniMax {
                 for (let j = 0; j < board.getBoardSize(); j++) {
                     if (!board.isCellFilled(i, j)) {
                         board.setSymbolAt(i, j, this.mySymbol);
-                        maximumValue = Math.max(maximumValue, miniMax(board,
+                        maximumValue = Math.max(maximumValue, MiniMax(board,
                             depth + 1, alpha, beta, false));
                         board.setSymbolAt(i, j, ' ');
                         alpha = Math.max(alpha, maximumValue);
@@ -41,7 +41,7 @@ class MiniMax {
                 for (let j = 0; j < board.getBoardSize(); j++) {
                     if (!board.isCellFilled(i, j)) {
                         board.setSymbolAt(i, j, this.opSymbol);
-                        minimumValue = Math.min(minimumValue, miniMax(board,
+                        minimumValue = Math.min(minimumValue, MiniMax(board,
                             depth + 1, alpha, beta, true));
                         board.setSymbolAt(i, j, ' ');
                         beta = Math.min(beta, minimumValue);
@@ -64,7 +64,7 @@ class MiniMax {
             for (let j = 0; j < board.getBoardSize(); j++) {
                 if (!board.isCellFilled(i, j)) {
                     board.setSymbolAt(i, j, this.mySymbol);
-                    let moveValue = miniMax(board, 0, minSafeInteger,
+                    let moveValue = MiniMax(board, 0, minSafeInteger,
                         maxSafeInteger, false);
                     board.setSymbolAt(i, j, EMPTY);
                     if (moveValue > bestValue) {
