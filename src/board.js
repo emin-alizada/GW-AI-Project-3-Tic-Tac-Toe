@@ -1,15 +1,16 @@
 export default class Board {
-  boardSize
-  constructor(board, remainingMoves, target) {
+
+  constructor(board, remainingMoves, target, boardSize) {
     this.board = board
     this.target = target
     this.remainingMoves = remainingMoves
+    this.boardSize = boardSize
   }
 
   createFromString(boardString, target) {
     let lines = boardString.split("\\n")
-    let boardWidth = lines[0].length()
-    boardSize = boardWidth
+    let boardWidth = lines[0].length
+    this.boardSize = boardWidth
     let boardContent = Array(boardWidth)
       .fill(null)
       .map(() => Array(boardWidth))
@@ -26,7 +27,7 @@ export default class Board {
         }
       }
     }
-    return new Board(boardContent, availableMoves, target)
+    return new Board(boardContent, availableMoves, target, this.boardSize)
   }
 
   anyMovesRemain() {
@@ -57,13 +58,13 @@ export default class Board {
 
   toString() {
     let sb = []
-    for (let i = 0; i < boardSize; i++) {
-      for (let j = 0; j < boardSize; j++) {
-        sb.append(this.board[i][j] == " " ? "-" : this.board[i][j].toString())
+    for (let i = 0; i < this.boardSize; i++) {
+      for (let j = 0; j < this.boardSize; j++) {
+        sb.append(this.board[i][j] == " " ? "-" : this.board[i][j].join(""))
       }
       sb.push("\n")
     }
     sb.push("\n")
-    return sb.toString()
+    return sb.join("")
   }
 }

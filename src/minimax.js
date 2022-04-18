@@ -110,12 +110,12 @@ class MiniMax {
                 }
                 if (xpcount == target + 1) {
                     xpcount = target;
-                    if (board.getSymbolAt(row, col - target) == X)
+                    if (board.getSymbolAt(row, col - target) == 'X')
                         xcount--;
                 }
                 if (opcount == target + 1) {
                     opcount = target;
-                    if (board.getSymbolAt(row, col - target) == O)
+                    if (board.getSymbolAt(row, col - target) == 'O')
                         ocount--;
                 }
                 if (xpcount == target && maxXcount < xcount) {
@@ -128,7 +128,7 @@ class MiniMax {
             if (maxXcount == target) {
                 this.won = true;
                 // System.out.prletln("MaxXCount: " + maxXcount);
-                if (this.mySymbol == X)
+                if (this.mySymbol == 'X')
                     return (maxSafeInteger / 2) - depth;
                 else
                     return (minSafeInteger / 2) + depth;
@@ -136,15 +136,15 @@ class MiniMax {
             if (maxOcount == target) {
                 this.won = true;
                 // System.out.prletln("MaxOCount: " + maxOcount);
-                if (this.mySymbol == O)
+                if (this.mySymbol == 'O')
                     return (maxSafeInteger / 2) - depth;
                 else
                     return (minSafeInteger / 2) + depth;
             }
-            // if (this.mySymbol == X) value += (maxXcount * maxXcount) - (maxOcount *
+            // if (this.mySymbol == 'X') value += (maxXcount * maxXcount) - (maxOcount *
             // maxOcount);
             // else value += (maxOcount * maxOcount) - (maxXcount * maxXcount);
-            if (this.mySymbol == X)
+            if (this.mySymbol == 'X')
                 value += maxXcount - maxOcount;
             else
                 value += maxOcount - maxXcount;
@@ -176,12 +176,12 @@ class MiniMax {
                 }
                 if (xpcount == target + 1) {
                     xpcount = target;
-                    if (board.getSymbolAt(col, row - target) == X)
+                    if (board.getSymbolAt(col, row - target) == 'X')
                         xcount--;
                 }
                 if (opcount == target + 1) {
                     opcount = target;
-                    if (board.getSymbolAt(col, row - target) == O)
+                    if (board.getSymbolAt(col, row - target) == 'O')
                         ocount--;
                 }
                 if (xpcount == target && maxXcount < xcount) {
@@ -193,24 +193,19 @@ class MiniMax {
             }
             if (maxXcount == target) {
                 this.won = true;
-                // System.out.prletln("MaxXCount: " + maxXcount);
-                if (this.mySymbol == X)
+                if (this.mySymbol == 'X')
                     return (maxSafeInteger / 2) - depth;
                 else
                     return (minSafeInteger / 2) + depth;
             }
             if (maxOcount == target) {
                 this.won = true;
-                // System.out.prletln("MaxOCount: " + maxOcount);
-                if (this.mySymbol == O)
+                if (this.mySymbol == 'O')
                     return (maxSafeInteger / 2) - depth;
                 else
                     return (minSafeInteger / 2) + depth;
             }
-            // if (this.mySymbol == X) value += (maxXcount * maxXcount) - (maxOcount *
-            // maxOcount);
-            // else value += (maxOcount * maxOcount) - (maxXcount * maxXcount);
-            if (this.mySymbol == X)
+            if (this.mySymbol == 'X')
                 value += maxXcount - maxOcount;
             else
                 value += maxOcount - maxXcount;
@@ -242,12 +237,12 @@ class MiniMax {
             }
             if (xpcount == target + 1) {
                 xpcount = target;
-                if (board.getSymbolAt(i - target, i - target) == X)
+                if (board.getSymbolAt(i - target, i - target) == 'X')
                     xcount--;
             }
             if (opcount == target + 1) {
                 opcount = target;
-                if (board.getSymbolAt(i - target, i - target) == O)
+                if (board.getSymbolAt(i - target, i - target) == 'O')
                     ocount--;
             }
 
@@ -260,19 +255,19 @@ class MiniMax {
         }
         if (maxXcount == target) {
             this.won = true;
-            if (this.mySymbol == X)
+            if (this.mySymbol == 'X')
                 return (maxSafeInteger / 2) - depth;
             else
                 return (minSafeInteger / 2) + depth;
         }
         if (maxOcount == target) {
             this.won = true;
-            if (this.mySymbol == O)
+            if (this.mySymbol == 'O')
                 return (maxSafeInteger / 2) - depth;
             else
                 return (minSafeInteger / 2) + depth;
         }
-        if (this.mySymbol == X)
+        if (this.mySymbol == 'X')
             value += maxXcount - maxOcount;
         else
             value += maxOcount - maxXcount;
@@ -303,36 +298,30 @@ class MiniMax {
             }
             if (xpcount == target + 1) {
                 xpcount = target;
-                if (board.getSymbolAt(i - target, (indexMax - i) + target) == X)
+                if (board.getSymbolAt(i - target, (indexMax - i) + target) == 'X')
                     xcount--;
             }
             if (opcount == target + 1) {
                 opcount = target;
-                if (board.getSymbolAt(i - target, (indexMax - i) + target) == O)
+                if (board.getSymbolAt(i - target, (indexMax - i) + target) == 'O')
                     ocount--;
             }
-            if (xpcount == target && maxXcount < xcount) {
-                maxXcount = xcount;
-            }
-            if (opcount == target && maxOcount < ocount) {
-                maxOcount = ocount;
-            }
+            if (xpcount == target && maxXcount < xcount) maxXcount = xcount;
+
+            if (opcount == target && maxOcount < ocount) maxOcount = ocount;
+
         }
         if (maxXcount == target) {
             this.won = true;
-            if (this.mySymbol == X)
-                return (maxSafeInteger / 2) - depth;
-            else
-                return (minSafeInteger / 2) + depth;
+            if (this.mySymbol == 'X') return Math.floor(maxSafeInteger / 2) - depth;
+            else return Math.floor(minSafeInteger / 2) + depth;
         }
         if (maxOcount == target) {
             this.won = true;
-            if (this.mySymbol == O)
-                return (maxSafeInteger / 2) - depth;
-            else
-                return (minSafeInteger / 2) + depth;
+            if (this.mySymbol == 'O') return Math.floor(maxSafeInteger / 2) - depth;
+            else return Math.floor(minSafeInteger / 2) + depth;
         }
-        if (this.mySymbol == X)
+        if (this.mySymbol == 'X')
             value += maxXcount - maxOcount;
         else
             value += maxOcount - maxXcount;
