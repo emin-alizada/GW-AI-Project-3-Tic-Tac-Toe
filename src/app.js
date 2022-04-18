@@ -1,8 +1,8 @@
 import {addTeamMember, createTeam, getTeamMembers} from "./requests.js";
 
 // createTeam();
-// getTeamMembers();
-addTeamMember();
+getTeamMembers();
+// addTeamMember();
 
 
 // Post request ler 406 verir
