@@ -55,7 +55,7 @@ export const getNextMove = (board) => {
     console.log("trying to get next move")
     for (let i = 0; i < board.getBoardSize(); i++) {
         for (let j = 0; j < board.getBoardSize(); j++) {
-            console.log("In get next move: " + i + " " + j);
+            // console.log("In get next move: " + i + " " + j);
             if (!board.isCellFilled(i, j)) {
                 board.setSymbolAt(i, j, board.mySymbol);
                 let moveValue = minimax(board, 0, Number.MIN_SAFE_INTEGER,
@@ -69,9 +69,9 @@ export const getNextMove = (board) => {
             }
         }
     }
-    console.log("BEST VALUE: " + bestValue);
-    console.log("BEST MOVE ROW: " + nextMove.x);
-    console.log("BEST MOVE COL: " + nextMove.y);
+    // console.log("BEST VALUE: " + bestValue);
+    // console.log("BEST MOVE ROW: " + nextMove.x);
+    // console.log("BEST MOVE COL: " + nextMove.y);
     return nextMove;
 }
 

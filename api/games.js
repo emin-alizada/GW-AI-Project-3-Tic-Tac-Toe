@@ -2,12 +2,10 @@ import apiClient from "./base.js"
 import qs from 'qs';
 import {teamId} from "./constants.js";
 
-// Tested and working
 export const getOpenGames = () => {
     return apiClient.get("", { params: { type: 'myOpenGames' } }).then((response) => response.data)
 }
 
-// TODO TEST
 export const createGame = (opponentTeamId, boardSize = 3, target = 3) => {
     const data = qs.stringify({
         teamId1: teamId,
@@ -22,18 +20,17 @@ export const createGame = (opponentTeamId, boardSize = 3, target = 3) => {
 }
 
 // TODO TEST
-export const makeMove = (gameId) => {
+export const makeMove = (gameId, move) => {
     const data = qs.stringify({
         teamId,
         gameId,
+        move,
         type: "move",
-        move: "0,0",
     })
 
-    return apiClient.post(`/${gameId}`).then((response) => response.data)
+    return apiClient.post(`/`, data).then((response) => response.data)
 }
 
-// TODO TEST
 export const getMoves = (gameId, count = 1) => {
     const params = {
         gameId,
@@ -44,7 +41,6 @@ export const getMoves = (gameId, count = 1) => {
     return apiClient.get("", { params }).then((response) => response.data)
 }
 
-// TODO TEST
 export const getBoardString = (gameId) => {
     const params = {
         gameId,
