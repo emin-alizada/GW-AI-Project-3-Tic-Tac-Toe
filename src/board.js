@@ -7,7 +7,7 @@ export default class Board {
     this.boardSize = boardSize
   }
 
-  createFromString(boardString, target) {
+  static createFromString(boardString, target) {
     let lines = boardString.split("\\n")
     let boardWidth = lines[0].length
     this.boardSize = boardWidth

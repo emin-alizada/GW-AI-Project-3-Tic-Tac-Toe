@@ -8,10 +8,12 @@ export const getOpenGames = () => {
 }
 
 // TODO TEST
-export const createGame = (opponentTeamId) => {
+export const createGame = (opponentTeamId, boardSize = 3, target = 3) => {
     const data = qs.stringify({
         teamId1: teamId,
         teamId2: opponentTeamId,
+        boardSize,
+        target,
         type: "game",
         gameType: "TTT",
     })

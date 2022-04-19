@@ -1,31 +1,113 @@
 import API from "../api/index.js";
+import {teamId as myTeamId} from "../api/constants.js";
+import MiniMax from "./minimax.js";
+import Board from "./board.js";
+
+const sleep = s => new Promise(r => setTimeout(r, s * 1000));
+
+const setMiniMaxSymbolsAndExtractGameId = (game) => {
+    const gameId = Object.keys(game)[0];
+    const [team1Id, team2Id] = game[gameId].split(':');
+
+    MiniMax.mySymbol = team1Id === myTeamId ? 'O' : 'X';
+    MiniMax.opSymbol = team1Id === myTeamId ? 'X' : 'O';
+
+    return {gameId, team1Id, team2Id};
+};
+
+while (true) {
+    const { myGames } = await API.getOpenGames()
+    // let myGames = [ { '3541': '1321:1324:O' } ]
+
+    console.log(myGames)
+
+    if (myGames.length === 0) {
+        console.log('No game avaliable');
+        await sleep(5)
+        continue;
+    }
+
+    const myActiveGames = myGames.filter(async (game) => {
+        const { gameId } = setMiniMaxSymbolsAndExtractGameId(game);
+
+        const response = await API.getMoves(gameId);
+        console.log(response);
+
+        if (response?.code === "FAIL" && response?.message === "No moves" && MiniMax.mySymbol === 'O') {
+            return true;
+        }
+
+        if (response?.code === "OK" && response?.moves.length === 0 && MiniMax.mySymbol === 'O') {
+            return true;
+        }
+
+        if (response?.code === "OK" && response?.moves.length > 0 && response?.moves[0]?.teamId === myTeamId) {
+            return true;
+        }
+
+        return false;
+    })
+
+    myActiveGames.forEach(async (game) => {
+        const { gameId } = setMiniMaxSymbolsAndExtractGameId(game);
+
+        const { output, target } = await API.getBoardString(gameId);
+        console.log(output);
+        console.log(target);
 
 
-// console.log(await API.createGame());
-// console.log(await API.createTeam('test123'));
+        const board = Board.createFromString(output, target);
+
+        if (!board.anyMovesRemain()) {
+            console.log('No moves remain');
+            return;
+        }
+
+        const move = MiniMax.(board);
+
+    })
+
+    console.log("end of loop");
+    await sleep(5)
+}
+
+
+// let myMoveExisted = false;
+//
+// for (let i = 0; i < myGames.length; i++) {
+//     const gameId = Object.keys(myGames[i])[0];
+//     const [team1Id, team2Id] = myGames[i][gameId].split(':');
+//
+//     MiniMax.mySymbol = team1Id === myTeamId ? 'O' : 'X';
+//     MiniMax.opSymbol = team1Id === myTeamId ? 'X' : 'O';
+//
+//     const response = await API.getMoves(gameId);
+//     console.log(response);
+//
+//     if (response?.code === "FAIL" && response?.message === "No moves" && MiniMax.mySymbol === 'O') {
+//         myMoveExisted = true;
+//     }
+//
+//     if (response?.code === "OK" && response?.moves.length === 0 && MiniMax.mySymbol === 'O') {
+//         myMoveExisted = true;
+//     }
+//
+//     if (response?.code === "OK" && response?.moves.length > 0 && response?.moves[0]?.teamId === myTeamId) {
+//         myMoveExisted = true;
+//     }
+// }
+
+
+
+
+
+
+
+
+
+// console.log(await API.createGame(opponentTeamId));
+// console.log(await API.createTeam('team2testing'));
 // console.log(await API.getTeamMembers());
 // console.log(await API.getOpenGames());
 
-// const sleep = s => new Promise(r => setTimeout(r, s * 1000));
-
-// while (true) {
-//     let { myGames } = await API.getOpenGames()
-
-//     if (myGames.length === 0) {
-//         console.log('No game avaliable');
-//         sleep(5)
-//         continue
-//     }
-
-//     let myMoveExisted = false;
-
-//     for (let i = 0; i < myGames.length; i++) {
-
-//     }
-
-
-//     if (!myMoveExisted) {
-//         console.log("Not my move in all available games");
-//     }
-//     sleep(5)
-// }
+// 3541

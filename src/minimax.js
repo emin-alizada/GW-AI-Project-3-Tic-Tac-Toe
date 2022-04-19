@@ -1,11 +1,11 @@
 import Board from "./board.js";
 import Move from "./move.js";
 
-class MiniMax {
+export default class MiniMax {
     MAX_DEPTH = 4
     won = false
-    mySymbol = ' ';
-    opSymbol = ' ';
+    static mySymbol = ' ';
+    static opSymbol = ' ';
     maxSafeInteger = Number.MAX_SAFE_INTEGER
     minSafeInteger = Number.MIN_SAFE_INTEGER
 
