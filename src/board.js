@@ -1,13 +1,16 @@
 export default class Board {
 
-  constructor(board, remainingMoves, target, boardSize) {
+  constructor(board, remainingMoves, target, boardSize, mySymbol, opSymbol) {
     this.board = board
     this.target = target
     this.remainingMoves = remainingMoves
     this.boardSize = boardSize
+    this.mySymbol = mySymbol
+    this.opSymbol = opSymbol
+    this.won = false
   }
 
-  static createFromString(boardString, target) {
+  static createFromString(boardString, target, mySymbol, opSymbol) {
     let lines = boardString.split("\n")
     let boardWidth = lines[0].length
     let boardContent = Array(boardWidth)
@@ -26,7 +29,7 @@ export default class Board {
         }
       }
     }
-    return new Board(boardContent, availableMoves, target, boardWidth)
+    return new Board(boardContent, availableMoves, target, boardWidth, mySymbol, opSymbol)
   }
 
   anyMovesRemain() {
@@ -54,6 +57,18 @@ export default class Board {
   getTarget() {
     return this.target
   }
+
+  // getMySymbol() {
+  //   return this.mySymbol
+  // }
+  //
+  // getOpSymbol() {
+  //   return this.opSymbol
+  // }
+  //
+  // getWon() {
+  //   return this.won
+  // }
 
   toString() {
     let sb = []
