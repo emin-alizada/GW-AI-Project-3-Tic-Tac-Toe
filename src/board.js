@@ -8,9 +8,8 @@ export default class Board {
   }
 
   static createFromString(boardString, target) {
-    let lines = boardString.split("\\n")
+    let lines = boardString.split("\n")
     let boardWidth = lines[0].length
-    this.boardSize = boardWidth
     let boardContent = Array(boardWidth)
       .fill(null)
       .map(() => Array(boardWidth))
@@ -27,7 +26,7 @@ export default class Board {
         }
       }
     }
-    return new Board(boardContent, availableMoves, target, this.boardSize)
+    return new Board(boardContent, availableMoves, target, boardWidth)
   }
 
   anyMovesRemain() {

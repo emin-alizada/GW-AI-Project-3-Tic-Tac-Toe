@@ -2,15 +2,13 @@ import Board from "./board.js";
 import Move from "./move.js";
 
 export default class MiniMax {
-    MAX_DEPTH = 4
-    won = false
+    static MAX_DEPTH = 4
+    static won = false
     static mySymbol = ' ';
     static opSymbol = ' ';
-    maxSafeInteger = Number.MAX_SAFE_INTEGER
-    minSafeInteger = Number.MIN_SAFE_INTEGER
 
     constructor(board, depth, alpha, beta, isMax) {
-        let nodeValue = heuristicFunction(board, depth);
+        let nodeValue = MiniMax.heuristicFunction(board, depth);
 
         if (depth == MAX_DEPTH || !board.anyMovesRemain() || this.won) {
             this.won = false;
@@ -18,11 +16,11 @@ export default class MiniMax {
         }
         // Maximize
         if (isMax) {
-            let maximumValue = minSafeInteger;
+            let maximumValue = Number.MIN_SAFE_INTEGER;
             for (let i = 0; i < board.getBoardSize(); i++) {
                 for (let j = 0; j < board.getBoardSize(); j++) {
                     if (!board.isCellFilled(i, j)) {
-                        board.setSymbolAt(i, j, this.mySymbol);
+                        board.setSymbolAt(i, j, MiniMax.mySymbol);
                         maximumValue = Math.max(maximumValue, MiniMax(board,
                             depth + 1, alpha, beta, false));
                         board.setSymbolAt(i, j, ' ');
@@ -36,11 +34,11 @@ export default class MiniMax {
             return maximumValue;
             // Minimize
         } else {
-            let minimumValue = maxSafeInteger;
+            let minimumValue = Number.MAX_SAFE_INTEGER;
             for (let i = 0; i < board.getBoardSize(); i++) {
                 for (let j = 0; j < board.getBoardSize(); j++) {
                     if (!board.isCellFilled(i, j)) {
-                        board.setSymbolAt(i, j, this.opSymbol);
+                        board.setSymbolAt(i, j, MiniMax.opSymbol);
                         minimumValue = Math.min(minimumValue, MiniMax(board,
                             depth + 1, alpha, beta, true));
                         board.setSymbolAt(i, j, ' ');
@@ -56,16 +54,16 @@ export default class MiniMax {
     }
 
 
-    getNextMove(board) {
+    static getNextMove(board) {
         let nextMove = new Move(-1, -1);
-        let bestValue = minSafeInteger;
+        let bestValue = Number.MIN_SAFE_INTEGER;
 
         for (let i = 0; i < board.getBoardSize(); i++) {
             for (let j = 0; j < board.getBoardSize(); j++) {
                 if (!board.isCellFilled(i, j)) {
-                    board.setSymbolAt(i, j, this.mySymbol);
-                    let moveValue = MiniMax(board, 0, minSafeInteger,
-                        maxSafeInteger, false);
+                    board.setSymbolAt(i, j, MiniMax.mySymbol);
+                    let moveValue = MiniMax(board, 0, Number.MIN_SAFE_INTEGER,
+                        Number.MAX_SAFE_INTEGER, false);
                     board.setSymbolAt(i, j, EMPTY);
                     if (moveValue > bestValue) {
                         nextMove.x = i;
@@ -81,7 +79,7 @@ export default class MiniMax {
         return nextMove;
     }
 
-    heuristicFunction(board, depth) {
+    static heuristicFunction(board, depth) {
         let value = 0;
         let bWidth = board.getBoardSize();
         let target = board.getTarget();
@@ -128,23 +126,23 @@ export default class MiniMax {
             if (maxXcount == target) {
                 this.won = true;
                 // System.out.prletln("MaxXCount: " + maxXcount);
-                if (this.mySymbol == 'X')
-                    return (maxSafeInteger / 2) - depth;
+                if (MiniMax.mySymbol == 'X')
+                    return (Number.MAX_SAFE_INTEGER / 2) - depth;
                 else
-                    return (minSafeInteger / 2) + depth;
+                    return (Number.MIN_SAFE_INTEGER / 2) + depth;
             }
             if (maxOcount == target) {
                 this.won = true;
                 // System.out.prletln("MaxOCount: " + maxOcount);
-                if (this.mySymbol == 'O')
-                    return (maxSafeInteger / 2) - depth;
+                if (MiniMax.mySymbol == 'O')
+                    return (Number.MAX_SAFE_INTEGER / 2) - depth;
                 else
-                    return (minSafeInteger / 2) + depth;
+                    return (Number.MIN_SAFE_INTEGER / 2) + depth;
             }
-            // if (this.mySymbol == 'X') value += (maxXcount * maxXcount) - (maxOcount *
+            // if (MiniMax.mySymbol == 'X') value += (maxXcount * maxXcount) - (maxOcount *
             // maxOcount);
             // else value += (maxOcount * maxOcount) - (maxXcount * maxXcount);
-            if (this.mySymbol == 'X')
+            if (MiniMax.mySymbol == 'X')
                 value += maxXcount - maxOcount;
             else
                 value += maxOcount - maxXcount;
@@ -193,19 +191,19 @@ export default class MiniMax {
             }
             if (maxXcount == target) {
                 this.won = true;
-                if (this.mySymbol == 'X')
-                    return (maxSafeInteger / 2) - depth;
+                if (MiniMax.mySymbol == 'X')
+                    return (Number.MAX_SAFE_INTEGER / 2) - depth;
                 else
-                    return (minSafeInteger / 2) + depth;
+                    return (Number.MIN_SAFE_INTEGER / 2) + depth;
             }
             if (maxOcount == target) {
                 this.won = true;
-                if (this.mySymbol == 'O')
-                    return (maxSafeInteger / 2) - depth;
+                if (MiniMax.mySymbol == 'O')
+                    return (Number.MAX_SAFE_INTEGER / 2) - depth;
                 else
-                    return (minSafeInteger / 2) + depth;
+                    return (Number.MIN_SAFE_INTEGER / 2) + depth;
             }
-            if (this.mySymbol == 'X')
+            if (MiniMax.mySymbol == 'X')
                 value += maxXcount - maxOcount;
             else
                 value += maxOcount - maxXcount;
@@ -255,19 +253,19 @@ export default class MiniMax {
         }
         if (maxXcount == target) {
             this.won = true;
-            if (this.mySymbol == 'X')
-                return (maxSafeInteger / 2) - depth;
+            if (MiniMax.mySymbol == 'X')
+                return (Number.MAX_SAFE_INTEGER / 2) - depth;
             else
-                return (minSafeInteger / 2) + depth;
+                return (Number.MIN_SAFE_INTEGER / 2) + depth;
         }
         if (maxOcount == target) {
             this.won = true;
-            if (this.mySymbol == 'O')
-                return (maxSafeInteger / 2) - depth;
+            if (MiniMax.mySymbol == 'O')
+                return (Number.MAX_SAFE_INTEGER / 2) - depth;
             else
-                return (minSafeInteger / 2) + depth;
+                return (Number.MIN_SAFE_INTEGER / 2) + depth;
         }
-        if (this.mySymbol == 'X')
+        if (MiniMax.mySymbol == 'X')
             value += maxXcount - maxOcount;
         else
             value += maxOcount - maxXcount;
@@ -313,15 +311,15 @@ export default class MiniMax {
         }
         if (maxXcount == target) {
             this.won = true;
-            if (this.mySymbol == 'X') return Math.floor(maxSafeInteger / 2) - depth;
-            else return Math.floor(minSafeInteger / 2) + depth;
+            if (MiniMax.mySymbol == 'X') return Math.floor(Number.MAX_SAFE_INTEGER / 2) - depth;
+            else return Math.floor(Number.MIN_SAFE_INTEGER / 2) + depth;
         }
         if (maxOcount == target) {
             this.won = true;
-            if (this.mySymbol == 'O') return Math.floor(maxSafeInteger / 2) - depth;
-            else return Math.floor(minSafeInteger / 2) + depth;
+            if (MiniMax.mySymbol == 'O') return Math.floor(Number.MAX_SAFE_INTEGER / 2) - depth;
+            else return Math.floor(Number.MIN_SAFE_INTEGER / 2) + depth;
         }
-        if (this.mySymbol == 'X')
+        if (MiniMax.mySymbol == 'X')
             value += maxXcount - maxOcount;
         else
             value += maxOcount - maxXcount;

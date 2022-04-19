@@ -2,27 +2,16 @@ import API from "../api/index.js";
 import {teamId as myTeamId} from "../api/constants.js";
 import MiniMax from "./minimax.js";
 import Board from "./board.js";
-
-const sleep = s => new Promise(r => setTimeout(r, s * 1000));
-
-const setMiniMaxSymbolsAndExtractGameId = (game) => {
-    const gameId = Object.keys(game)[0];
-    const [team1Id, team2Id] = game[gameId].split(':');
-
-    MiniMax.mySymbol = team1Id === myTeamId ? 'O' : 'X';
-    MiniMax.opSymbol = team1Id === myTeamId ? 'X' : 'O';
-
-    return {gameId, team1Id, team2Id};
-};
+import {setMiniMaxSymbolsAndExtractGameId, sleep} from "./helpers.js";
 
 while (true) {
     const { myGames } = await API.getOpenGames()
     // let myGames = [ { '3541': '1321:1324:O' } ]
 
-    console.log(myGames)
+    // console.log(myGames)
 
     if (myGames.length === 0) {
-        console.log('No game avaliable');
+        console.log('No game available');
         await sleep(5)
         continue;
     }
@@ -31,7 +20,7 @@ while (true) {
         const { gameId } = setMiniMaxSymbolsAndExtractGameId(game);
 
         const response = await API.getMoves(gameId);
-        console.log(response);
+        // console.log(response);
 
         if (response?.code === "FAIL" && response?.message === "No moves" && MiniMax.mySymbol === 'O') {
             return true;
@@ -52,8 +41,8 @@ while (true) {
         const { gameId } = setMiniMaxSymbolsAndExtractGameId(game);
 
         const { output, target } = await API.getBoardString(gameId);
-        console.log(output);
-        console.log(target);
+        // console.log(output);
+        // console.log(target);
 
 
         const board = Board.createFromString(output, target);
@@ -63,13 +52,19 @@ while (true) {
             return;
         }
 
-        const move = MiniMax.(board);
-
+        const move = MiniMax.getNextMove(board);
+        console.log(move);
     })
 
     console.log("end of loop");
     await sleep(5)
 }
+
+
+
+
+
+
 
 
 // let myMoveExisted = false;
@@ -96,8 +91,6 @@ while (true) {
 //         myMoveExisted = true;
 //     }
 // }
-
-
 
 
 
