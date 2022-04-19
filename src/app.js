@@ -1,8 +1,8 @@
 import API from "../api/index.js";
-import {teamId as myTeamId} from "../api/constants.js";
-import {getNextMove} from "./minimax.js";
+import { teamId as myTeamId } from "../api/constants.js";
+import { getNextMove } from "./minimax.js";
 import Board from "./board.js";
-import {asyncFilter, setMiniMaxSymbolsAndExtractGameId, sleep} from "./helpers.js";
+import { asyncFilter, setMiniMaxSymbolsAndExtractGameId, sleep } from "./helpers.js";
 
 const main = async () => {
     while (true) {
@@ -58,6 +58,7 @@ const main = async () => {
 
             const response = await API.makeMove(gameId, move.toString());
             console.log(response);
+            console.log(board.toString());
         }
 
         console.log("end of loop");

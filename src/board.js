@@ -74,7 +74,7 @@ export default class Board {
     let sb = []
     for (let i = 0; i < this.boardSize; i++) {
       for (let j = 0; j < this.boardSize; j++) {
-        sb.append(this.board[i][j] == " " ? "-" : this.board[i][j].join(""))
+        sb.push(this.board[i][j] == " " ? "-" : this.board[i][j])
       }
       sb.push("\n")
     }
