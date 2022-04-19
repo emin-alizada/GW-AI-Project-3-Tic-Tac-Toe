@@ -1,10 +1,11 @@
 import qs from 'qs';
 import apiClient from "./base.js"
+import {teamId} from "./constants.js";
 
 export const getTeamMembers = () => {
     let params = {
         type: "team",
-        teamId: "1321"
+        teamId
     }
     return apiClient.get("/", { params }).then((response) => response.data)
 }
@@ -17,11 +18,11 @@ export const createTeam = (name) => {
     return apiClient.post("/", data).then((response) => response.data)
 }
 
-export const addTeamMember = (name) => {
+export const addTeamMember = () => {
     const data = qs.stringify({
         type: 'member',
         userId: '1097',
-        teamId: '1321',
+        teamId
     })
     return apiClient.post("/", data).then((response) => response.data)
 }

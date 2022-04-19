@@ -4,6 +4,7 @@ import API from "../api/index.js";
 // console.log(await API.createGame());
 // console.log(await API.createTeam('test123'));
 // console.log(await API.getTeamMembers());
+// console.log(await API.getOpenGames());
 
 // const sleep = s => new Promise(r => setTimeout(r, s * 1000));
 
