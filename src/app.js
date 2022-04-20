@@ -1,5 +1,5 @@
 import API from "../api/index.js";
-import { teamId as myTeamId } from "../api/constants.js";
+import {opponentTeamId, teamId as myTeamId} from "../api/constants.js";
 import { getNextMove } from "./minimax.js";
 import Board from "./board.js";
 import { asyncFilter, setMiniMaxSymbolsAndExtractGameId, sleep } from "./helpers.js";
@@ -8,7 +8,7 @@ const main = async () => {
     while (true) {
         console.log("Starting loop");
         const { myGames } = await API.getOpenGames()
-        // console.log(myGames)
+        console.log(myGames)
 
         if (myGames.length === 0) {
             console.log('No game available');
@@ -43,7 +43,7 @@ const main = async () => {
             const { gameId, mySymbol, opSymbol } = setMiniMaxSymbolsAndExtractGameId(game);
 
             const { output, target } = await API.getBoardString(gameId);
-            // console.log(output);
+            // console.log("server output \n", output);
             // console.log(target);
 
             const board = Board.createFromString(output, target, mySymbol, opSymbol);
@@ -68,7 +68,7 @@ const main = async () => {
 
 await main();
 
-// console.log(await API.createGame(opponentTeamId));
+// console.log(await API.createGame(opponentTeamId, 5, 5));
 // console.log(await API.createTeam('team2testing'));
 // console.log(await API.getTeamMembers());
 // console.log(await API.getOpenGames());

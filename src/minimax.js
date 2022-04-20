@@ -27,8 +27,9 @@ export const minimax = (board, depth, alpha, beta, isMax) => {
             }
         }
         return maximumValue;
-        // Minimize
-    } else {
+    }
+    // Minimize
+    else {
         let minimumValue = Number.MAX_SAFE_INTEGER;
         for (let i = 0; i < board.getBoardSize(); i++) {
             for (let j = 0; j < board.getBoardSize(); j++) {
@@ -121,7 +122,7 @@ export const heuristicFunction = (board, depth) => {
         }
         if (maxXcount === target) {
             board.won = true;
-            // System.out.prletln("MaxXCount: " + maxXcount);
+
             if (board.mySymbol === 'X')
                 return (Number.MAX_SAFE_INTEGER / 2) - depth;
             else
@@ -134,9 +135,7 @@ export const heuristicFunction = (board, depth) => {
             else
                 return (Number.MIN_SAFE_INTEGER / 2) + depth;
         }
-        // if (MiniMax.mySymbol == 'X') value += (maxXcount * maxXcount) - (maxOcount *
-        // maxOcount);
-        // else value += (maxOcount * maxOcount) - (maxXcount * maxXcount);
+
         if (board.mySymbol === 'X')
             value += maxXcount - maxOcount;
         else
