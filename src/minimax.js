@@ -85,6 +85,35 @@ export const heuristicFunction = (board, depth) => {
     let xpcount = 0, opcount = 0;
     let maxXcount = 0, maxOcount = 0;
 
+    const checkAndReset = () => {
+        if (maxXcount === target) {
+            board.won = true;
+
+            if (board.mySymbol === 'X')
+                return (Number.MAX_SAFE_INTEGER / 2) - depth;
+            else
+                return (Number.MIN_SAFE_INTEGER / 2) + depth;
+        }
+        if (maxOcount === target) {
+            board.won = true;
+            if (board.mySymbol === 'O')
+                return (Number.MAX_SAFE_INTEGER / 2) - depth;
+            else
+                return (Number.MIN_SAFE_INTEGER / 2) + depth;
+        }
+
+        if (board.mySymbol === 'X')
+            value += maxXcount - maxOcount;
+        else
+            value += maxOcount - maxXcount;
+        xcount = 0;
+        ocount = 0;
+        maxXcount = 0;
+        maxOcount = 0;
+        xpcount = 0;
+        opcount = 0;
+    }
+
     for (let row = 0; row < bWidth; row++) {
         for (let col = 0; col < bWidth; col++) {
             let mark = board.getSymbolAt(row, col);
@@ -120,32 +149,10 @@ export const heuristicFunction = (board, depth) => {
                 maxOcount = ocount;
             }
         }
-        if (maxXcount === target) {
-            board.won = true;
 
-            if (board.mySymbol === 'X')
-                return (Number.MAX_SAFE_INTEGER / 2) - depth;
-            else
-                return (Number.MIN_SAFE_INTEGER / 2) + depth;
-        }
-        if (maxOcount === target) {
-            board.won = true;
-            if (board.mySymbol === 'O')
-                return (Number.MAX_SAFE_INTEGER / 2) - depth;
-            else
-                return (Number.MIN_SAFE_INTEGER / 2) + depth;
-        }
-
-        if (board.mySymbol === 'X')
-            value += maxXcount - maxOcount;
-        else
-            value += maxOcount - maxXcount;
-        xcount = 0;
-        ocount = 0;
-        maxXcount = 0;
-        maxOcount = 0;
-        xpcount = 0;
-        opcount = 0;
+        const checkedValue = checkAndReset();
+        if (checkedValue !== undefined)
+            return checkedValue;
     }
 
     // Find if any column is winning
@@ -183,31 +190,10 @@ export const heuristicFunction = (board, depth) => {
                 maxOcount = ocount;
             }
         }
-        if (maxXcount === target) {
-            board.won = true;
-            if (board.mySymbol === 'X')
-                return (Number.MAX_SAFE_INTEGER / 2) - depth;
-            else
-                return (Number.MIN_SAFE_INTEGER / 2) + depth;
-        }
-        if (maxOcount === target) {
-            board.won = true;
-            if (board.mySymbol === 'O')
-                return (Number.MAX_SAFE_INTEGER / 2) - depth;
-            else
-                return (Number.MIN_SAFE_INTEGER / 2) + depth;
-        }
-        if (board.mySymbol === 'X')
-            value += maxXcount - maxOcount;
-        else
-            value += maxOcount - maxXcount;
 
-        xcount = 0;
-        ocount = 0;
-        maxXcount = 0;
-        maxOcount = 0;
-        xpcount = 0;
-        opcount = 0;
+        const checkedValue = checkAndReset();
+        if (checkedValue !== undefined)
+            return checkedValue;
     }
 
     // Find if any diagonal is winning
@@ -245,31 +231,10 @@ export const heuristicFunction = (board, depth) => {
             maxOcount = ocount;
         }
     }
-    if (maxXcount === target) {
-        board.won = true;
-        if (board.mySymbol === 'X')
-            return (Number.MAX_SAFE_INTEGER / 2) - depth;
-        else
-            return (Number.MIN_SAFE_INTEGER / 2) + depth;
-    }
-    if (maxOcount === target) {
-        board.won = true;
-        if (board.mySymbol === 'O')
-            return (Number.MAX_SAFE_INTEGER / 2) - depth;
-        else
-            return (Number.MIN_SAFE_INTEGER / 2) + depth;
-    }
-    if (board.mySymbol === 'X')
-        value += maxXcount - maxOcount;
-    else
-        value += maxOcount - maxXcount;
 
-    xcount = 0;
-    ocount = 0;
-    maxXcount = 0;
-    maxOcount = 0;
-    xpcount = 0;
-    opcount = 0;
+    const checkedValue = checkAndReset();
+    if (checkedValue !== undefined)
+        return checkedValue;
 
     let indexMax = bWidth - 1;
     for (let i = 0; i <= indexMax; i++) {
