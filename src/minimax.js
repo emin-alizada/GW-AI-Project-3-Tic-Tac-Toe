@@ -1,6 +1,6 @@
 import Move from "./move.js";
 
-const MAX_DEPTH = 2;
+let MAX_DEPTH = 5;
 
 export const minimax = (board, depth, alpha, beta, isMax) => {
     let nodeValue = heuristicFunction(board, depth);
@@ -49,9 +49,20 @@ export const minimax = (board, depth, alpha, beta, isMax) => {
     }
 }
 
+const adjustMaxDepth = (boardSize) => {
+    if (boardSize <= 4) {
+        MAX_DEPTH = 4
+    } else if (boardSize <= 6) {
+        MAX_DEPTH = 3;
+    } else {
+        MAX_DEPTH = 2;
+    }
+};
+
 export const getNextMove = (board) => {
     let nextMove = new Move(-1, -1);
     let bestValue = Number.MIN_SAFE_INTEGER;
+    adjustMaxDepth(board.getBoardSize());
 
     console.log("trying to get next move")
     for (let i = 0; i < board.getBoardSize(); i++) {

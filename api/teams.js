@@ -2,6 +2,8 @@ import qs from 'qs';
 import apiClient from "./base.js"
 import {teamId} from "./constants.js";
 
+//API call about teams
+
 export const getTeamMembers = () => {
     let params = {
         type: "team",

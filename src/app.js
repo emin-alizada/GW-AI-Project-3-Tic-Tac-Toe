@@ -6,9 +6,9 @@ import { asyncFilter, setMiniMaxSymbolsAndExtractGameId, sleep } from "./helpers
 
 const main = async () => {
     while (true) {
-        console.log("Starting loop");
+        // console.log("Starting loop");
         const { myGames } = await API.getOpenGames()
-        console.log(myGames)
+        // console.log(myGames)
 
         if (myGames.length === 0) {
             console.log('No game available');
@@ -16,6 +16,7 @@ const main = async () => {
             continue;
         }
 
+        // Filtering from the list of games, only the ones that I need to play
         const myActiveGames = await asyncFilter(myGames, async (game) => {
             const { gameId, mySymbol } = setMiniMaxSymbolsAndExtractGameId(game);
 
@@ -39,6 +40,7 @@ const main = async () => {
 
         console.log(myActiveGames);
 
+        // Creating board and making the most rationale move
         for (const game of myActiveGames) {
             const { gameId, mySymbol, opSymbol } = setMiniMaxSymbolsAndExtractGameId(game);
 
@@ -61,7 +63,7 @@ const main = async () => {
             console.log(board.toString());
         }
 
-        console.log("end of loop");
+        // console.log("end of loop");
         await sleep(5)
     }
 }

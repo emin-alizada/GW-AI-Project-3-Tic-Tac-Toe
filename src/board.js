@@ -41,12 +41,12 @@ export default class Board {
   }
 
   isCellFilled(row, column) {
-    return this.board[row][column] != " "
+    return this.board[row][column] !== " "
   }
 
   setSymbolAt(row, column, newSymbol) {
     this.board[row][column] = newSymbol
-    if (newSymbol != " ") this.remainingMoves--
+    if (newSymbol !== " ") this.remainingMoves--
     else this.remainingMoves++
   }
 

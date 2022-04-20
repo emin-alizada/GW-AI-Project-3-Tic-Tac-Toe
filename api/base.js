@@ -1,5 +1,6 @@
 import axios from "axios"
 
+// Configuration for requests
 const axiosConfig = Object.freeze({
     baseURL: 'https://www.notexponential.com/aip2pgaming/api/index.php',
     timeout: 100000,

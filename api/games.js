@@ -2,6 +2,8 @@ import apiClient from "./base.js"
 import qs from 'qs';
 import {teamId} from "./constants.js";
 
+// API Calls regarding games
+
 export const getOpenGames = () => {
     return apiClient.get("", { params: { type: 'myOpenGames' } }).then((response) => response.data)
 }
@@ -19,7 +21,7 @@ export const createGame = (opponentTeamId, boardSize = 3, target = 3) => {
     return apiClient.post("", data).then((response) => response.data)
 }
 
-// TODO TEST
+
 export const makeMove = (gameId, move) => {
     const data = qs.stringify({
         teamId,
